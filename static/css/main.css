@@ -3,15 +3,15 @@
    ============================================================ */
 
 :root{
-  --bg: #0b1220;
-  --surface: rgba(255,255,255,0.08);
-  --card: rgba(255,255,255,0.92);
+  --bg: #f6fbf7;
+  --surface: rgba(255,255,255,0.72);
+  --card: #ffffff;
   --card-strong: #ffffff;
-  --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.70);
+  --text: rgba(11,18,32,0.90);
+  --muted: rgba(11,18,32,0.62);
 
-  --ink: #0b1220;
-  --ink-2: rgba(11,18,32,0.70);
+  --ink: rgba(11,18,32,0.92);
+  --ink-2: rgba(11,18,32,0.66);
   --border: rgba(11,18,32,0.10);
 
   --g1: #1B4332;
@@ -21,8 +21,8 @@
   --danger: #E63946;
   --blue: #2563EB;
 
-  --shadow: 0 16px 60px rgba(0,0,0,0.25);
-  --shadow-soft: 0 10px 30px rgba(11,18,32,0.10);
+  --shadow: 0 18px 70px rgba(11,18,32,0.16);
+  --shadow-soft: 0 10px 28px rgba(11,18,32,0.10);
   --radius: 18px;
   --radius-lg: 26px;
 }
@@ -34,9 +34,9 @@ body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
   background:
-    radial-gradient(1200px 600px at 20% -10%, rgba(82,183,136,0.35), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(37,99,235,0.22), transparent 55%),
-    linear-gradient(160deg, var(--g1) 0%, var(--g2) 45%, var(--g3) 100%);
+    radial-gradient(1000px 600px at 15% -10%, rgba(82,183,136,0.22), transparent 60%),
+    radial-gradient(900px 520px at 100% 0%, rgba(37,99,235,0.10), transparent 55%),
+    linear-gradient(180deg, #f6fbf7 0%, #ffffff 60%);
   color: var(--text);
 }
 
@@ -63,8 +63,8 @@ button, input, textarea{ font: inherit; }
   z-index: 50;
   padding: 14px 16px;
   backdrop-filter: blur(14px);
-  background: rgba(11,18,32,0.22);
-  border-bottom: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.72);
+  border-bottom: 1px solid rgba(11,18,32,0.08);
 }
 .topbar-inner{
   display:flex;
@@ -84,8 +84,8 @@ button, input, textarea{ font: inherit; }
   display:flex;
   align-items:center;
   justify-content:center;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(82,183,136,0.10);
+  border: 1px solid rgba(82,183,136,0.18);
 }
 .brand .title{
   line-height: 1.15;
@@ -107,9 +107,9 @@ button, input, textarea{ font: inherit; }
   gap:8px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.92);
+  background: rgba(11,18,32,0.04);
+  border: 1px solid rgba(11,18,32,0.10);
+  color: rgba(11,18,32,0.86);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -124,7 +124,7 @@ button, input, textarea{ font: inherit; }
 .card{
   background: var(--card);
   color: var(--ink);
-  border: 1px solid rgba(255,255,255,0.35);
+  border: 1px solid rgba(11,18,32,0.08);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
 }
@@ -281,8 +281,8 @@ button, input, textarea{ font: inherit; }
   transform: translateX(-50%);
   bottom: 12px;
   width: min(980px, calc(100% - 24px));
-  background: rgba(11,18,32,0.55);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.74);
+  border: 1px solid rgba(11,18,32,0.10);
   border-radius: 18px;
   padding: 10px 10px;
   display:flex;
@@ -300,18 +300,18 @@ button, input, textarea{ font: inherit; }
   gap: 6px;
   padding: 8px 8px;
   border-radius: 14px;
-  color: rgba(255,255,255,0.78);
+  color: rgba(11,18,32,0.62);
   transition: background 0.12s, color 0.12s, transform 0.12s;
 }
 .nav-item i{ font-size: 16px; }
 .nav-item span{ font-size: 10px; font-weight: 800; letter-spacing: 0.2px; }
 .nav-item:hover{
-  background: rgba(255,255,255,0.10);
-  color: rgba(255,255,255,0.92);
+  background: rgba(11,18,32,0.04);
+  color: rgba(11,18,32,0.84);
 }
 .nav-item.active{
-  background: rgba(82,183,136,0.18);
-  color: white;
+  background: rgba(82,183,136,0.16);
+  color: rgba(11,18,32,0.92);
   border: 1px solid rgba(82,183,136,0.35);
 }
 
@@ -324,9 +324,9 @@ button, input, textarea{ font: inherit; }
   width: min(520px, calc(100% - 24px));
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(11,18,32,0.82);
+  background: rgba(11,18,32,0.90);
   border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.92);
+  color: rgba(255,255,255,0.94);
   opacity: 0;
   pointer-events:none;
   transition: opacity 0.2s, transform 0.2s;
@@ -343,9 +343,9 @@ button, input, textarea{ font: inherit; }
   top: 16px;
   padding: 12px 14px;
   border-radius: 18px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.86);
+  border: 1px solid rgba(11,18,32,0.10);
+  color: rgba(11,18,32,0.92);
   backdrop-filter: blur(16px);
   box-shadow: 0 16px 50px rgba(0,0,0,0.25);
   display:flex;
