@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Surplus Feed — GreenLife{% endblock %}
+
+{% block body %}
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="mark">🏪</div>
+      <div class="title">
+        <strong>Surplus Feed</strong>
+        <span>Rescue food, reduce waste</span>
+      </div>
+    </div>
+    <div class="pill">EcoCoins <strong id="coinBalance">0</strong> 🪙</div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="card strong pad">
+    <div class="card-title">Available near you</div>
+    <div class="card-subtitle">Book a surplus item and earn coins for preventing waste.</div>
+  </div>
+
+  <div style="height:12px;"></div>
+
+  <div class="grid" id="surplusList"></div>
+</div>
+
+<div class="coin-popup" id="coinPopup">
+  <div style="font-size:28px;">🪙</div>
+  <div class="coin-amount" id="coinPopupAmount">+30</div>
+  <div class="coin-label">EcoCoins earned</div>
+  <div style="font-size:12px;margin-top:6px;opacity:0.82;" id="coinPopupSDG"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<nav class="bottom-nav">
+  <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="/meal" class="nav-item"><i class="fas fa-utensils"></i><span>Meal</span></a>
+  <a href="/surplus" class="nav-item active"><i class="fas fa-store"></i><span>Surplus</span></a>
+  <a href="/wallet" class="nav-item"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="/learn" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
+</nav>
+
+<script src="/static/js/coins.js"></script>
+<script src="/static/js/streak.js"></script>
+<script src="/static/js/surplus.js"></script>
+{% endblock %}
+

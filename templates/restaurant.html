@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Restaurant Panel — GreenLife{% endblock %}
+
+{% block body %}
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="mark">👨‍🍳</div>
+      <div class="title">
+        <strong>Restaurant Panel</strong>
+        <span>List surplus items (demo)</span>
+      </div>
+    </div>
+    <div class="pill">EcoCoins <strong id="coinBalance">0</strong> 🪙</div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="card strong pad">
+    <div class="card-title">Add a surplus listing</div>
+    <div class="card-subtitle">This demo simulates listing; production would save to Firebase.</div>
+
+    <div style="height:12px;"></div>
+    <div class="field-label">Item name</div>
+    <input class="input" id="itemName" placeholder="e.g. Veg biryani boxes"/>
+
+    <div style="height:10px;"></div>
+    <div class="grid two">
+      <div>
+        <div class="field-label">Quantity</div>
+        <input class="input" id="itemQty" placeholder="e.g. 8"/>
+      </div>
+      <div>
+        <div class="field-label">Pickup time</div>
+        <input class="input" id="itemTime" placeholder="e.g. 7–9pm"/>
+      </div>
+    </div>
+
+    <div style="height:12px;"></div>
+    <button class="btn btn-primary btn-block" onclick="submitListing()">Publish listing</button>
+    <div class="help" id="publishHint"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<nav class="bottom-nav">
+  <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="/meal" class="nav-item"><i class="fas fa-utensils"></i><span>Meal</span></a>
+  <a href="/surplus" class="nav-item"><i class="fas fa-store"></i><span>Surplus</span></a>
+  <a href="/wallet" class="nav-item"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="/learn" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
+</nav>
+
+<script src="/static/js/coins.js"></script>
+<script src="/static/js/streak.js"></script>
+<script src="/static/js/restaurant.js"></script>
+{% endblock %}
+

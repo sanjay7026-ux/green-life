@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}GreenLife{% endblock %}
+
+{% block head %}
+<style>
+  .welcome-wrap{
+    min-height: 100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 24px 16px;
+  }
+  .welcome-card{
+    width: min(440px, 100%);
+    border-radius: 28px;
+    padding: 26px 22px;
+    animation: fadeInUp 0.5s ease;
+  }
+  .hero{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .hero .logo{
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(82,183,136,0.14);
+    border: 1px solid rgba(82,183,136,0.25);
+    font-size: 26px;
+  }
+  .hero .name{
+    line-height: 1.05;
+  }
+  .hero .name strong{
+    display:block;
+    font-size: 20px;
+    color: #1B4332;
+    letter-spacing: 0.2px;
+  }
+  .hero .name span{
+    display:block;
+    font-size: 12px;
+    color: rgba(11,18,32,0.60);
+    margin-top: 4px;
+  }
+  .sdg-row{ display:flex; gap: 8px; flex-wrap:wrap; margin-top: 14px; }
+  .returning{ margin-top: 10px; font-size: 12px; color: rgba(11,18,32,0.55); }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="welcome-wrap">
+  <div class="card strong welcome-card">
+    <div class="hero">
+      <div class="logo">🌿</div>
+      <div class="name">
+        <strong>GreenLife</strong>
+        <span>Good habits, real rewards, greener living</span>
+      </div>
+    </div>
+
+    <div class="card-subtitle" style="margin-bottom:14px;">
+      Track meals, mood, water, and learning — earn EcoCoins as you go.
+    </div>
+
+    <div class="field-label">What’s your name?</div>
+    <input type="text" class="input" id="nameInput" placeholder="Enter your name..." maxlength="20" style="text-align:center;"/>
+
+    <div style="height:12px"></div>
+    <button class="btn btn-primary btn-block" onclick="startApp()">
+      Let’s start <span aria-hidden="true">→</span>
+    </button>
+
+    <div class="sdg-row">
+      <span class="chip">SDG 2</span>
+      <span class="chip">SDG 3</span>
+      <span class="chip">SDG 5</span>
+      <span class="chip">SDG 6</span>
+      <span class="chip">SDG 12</span>
+    </div>
+
+    <div class="returning" id="returningMsg"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Check if user already has a name saved
+  window.onload = function() {
+    const name = localStorage.getItem('greenlife_user');
+    if (name) {
+      document.getElementById('nameInput').value = name;
+      document.getElementById('returningMsg').textContent =
+        `Welcome back, ${name}!`;
+    }
+  };
+
+  function startApp() {
+    const nameInput = document.getElementById('nameInput');
+    const name = nameInput.value.trim();
+
+    // Validate name
+    if (!name) {
+      nameInput.style.borderColor = 'rgba(230,57,70,0.65)';
+      nameInput.placeholder = 'Please enter your name first!';
+      return;
+    }
+
+    // Save name to localStorage
+    // localStorage = browser's built-in storage
+    // Data stays even after closing the browser
+    localStorage.setItem('greenlife_user', name);
+
+    // Initialize coins if first time
+    if (!localStorage.getItem('greenlife_coins')) {
+      localStorage.setItem('greenlife_coins', '0');
+    }
+
+    // Initialize streak if first time
+    if (!localStorage.getItem('greenlife_streak')) {
+      localStorage.setItem('greenlife_streak', '0');
+    }
+
+    // Go to dashboard
+    window.location.href = '/dashboard';
+  }
+
+  // Allow pressing Enter key to start
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('nameInput')
+      .addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') startApp();
+      });
+  });
+</script>
+{% endblock %}

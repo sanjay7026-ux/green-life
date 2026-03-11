@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — GreenLife{% endblock %}
+
+{% block head %}
+<style>
+  .hero-head{
+    padding: 16px 16px 12px;
+    background: rgba(11,18,32,0.22);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(16px);
+  }
+  .hero-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .hero-top h2{ margin:0; font-size: 18px; letter-spacing: 0.2px; }
+  .hero-top p{ margin:4px 0 0; font-size: 12px; color: rgba(255,255,255,0.72); }
+  .mini-stat{
+    text-align:center;
+    padding: 8px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.10);
+    min-width: 94px;
+  }
+  .mini-stat strong{
+    display:block;
+    font-size: 20px;
+    color: #F4A261;
+    font-weight: 900;
+    line-height: 1.05;
+  }
+  .mini-stat span{
+    display:block;
+    font-size: 10px;
+    color: rgba(255,255,255,0.72);
+    font-weight: 800;
+    margin-top: 2px;
+  }
+  .coins-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.10);
+  }
+  .coins-row .label{ font-size: 12px; color: rgba(255,255,255,0.72); font-weight: 800; }
+  .coins-row .amount{ font-size: 22px; font-weight: 900; color: #F4A261; }
+  .coins-row .next{ font-size: 11px; color: rgba(255,255,255,0.68); text-align:right; }
+
+  .sdg-wrap{ padding: 12px 16px 0; }
+  .sdg-title{
+    font-size: 11px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.68);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 10px;
+  }
+  .sdg-grid{ display:flex; gap: 8px; flex-wrap:wrap; }
+  .sdg-chip{
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.76);
+    transition: transform 0.15s, background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .sdg-chip.active{
+    background: rgba(216,243,220,1);
+    color: #1B4332;
+    border-color: rgba(82,183,136,0.85);
+    transform: translateY(-1px);
+  }
+
+  .habit-card{
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    box-shadow: 0 10px 30px rgba(11,18,32,0.10);
+    cursor:pointer;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    border: 2px solid transparent;
+  }
+  .habit-card:hover{ transform: translateY(-1px); box-shadow: 0 14px 36px rgba(11,18,32,0.14); }
+  .habit-card.completed{ border-color: rgba(82,183,136,0.85); background: rgba(240,255,244,0.95); }
+  .habit-icon{
+    width: 48px; height: 48px; border-radius: 16px;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 22px; flex-shrink:0;
+    border: 1px solid rgba(11,18,32,0.08);
+  }
+  .habit-info{ flex:1; }
+  .habit-name{ font-size: 14px; font-weight: 900; color: #1B4332; }
+  .habit-desc{ font-size: 12px; color: rgba(11,18,32,0.55); margin-top: 2px; }
+  .habit-coins{ font-size: 12px; font-weight: 900; color: #F4A261; white-space:nowrap; }
+  .habit-check{
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid rgba(11,18,32,0.12);
+    display:flex; align-items:center; justify-content:center;
+    color: transparent; flex-shrink:0;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .habit-card.completed .habit-check{ background: #52B788; border-color:#52B788; color:white; }
+
+  .section-title{
+    display:flex; align-items:center; gap: 8px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.92);
+    margin: 14px 0 12px;
+  }
+
+  .progress-card{ text-align:center; }
+  .progress-ring-container{ position:relative; width: 102px; height: 102px; margin: 0 auto 10px; }
+  .progress-ring{ transform: rotate(-90deg); }
+  .progress-ring-bg{ fill:none; stroke: rgba(11,18,32,0.08); stroke-width: 8; }
+  .progress-ring-fill{
+    fill:none; stroke: url(#greenGradient); stroke-width: 8; stroke-linecap: round;
+    stroke-dasharray: 283; stroke-dashoffset: 283; transition: stroke-dashoffset 0.8s ease;
+  }
+  .progress-text{
+    position:absolute; top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px; font-weight: 1000; color: #1B4332;
+  }
+  .progress-label{ font-size: 12px; color: rgba(11,18,32,0.58); }
+
+  .water-title{ font-weight: 900; color:#1B4332; display:flex; align-items:center; gap: 8px; }
+  .water-amount{ font-size: 13px; font-weight: 1000; color: #1D4ED8; }
+  .water-buttons{ display:flex; gap: 8px; margin-top: 10px; }
+  .water-btn{
+    flex:1; padding: 10px; border:none; border-radius: 12px;
+    background: rgba(37,99,235,0.95); color:white; font-size: 12px; font-weight: 900; cursor:pointer;
+    transition: transform 0.12s, filter 0.12s;
+  }
+  .water-btn:hover{ filter: brightness(0.97); transform: translateY(-1px); }
+
+  .summary-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .summary-item{ background: rgba(255,255,255,0.92); border-radius: 16px; padding: 14px; text-align:center; box-shadow: 0 10px 30px rgba(11,18,32,0.10); }
+  .summary-item .s-icon{ font-size: 22px; margin-bottom: 6px; }
+  .summary-item .s-value{ font-size: 18px; font-weight: 1000; color: #1B4332; }
+  .summary-item .s-label{ font-size: 11px; color: rgba(11,18,32,0.55); font-weight: 800; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="hero-head">
+  <div class="hero-top">
+    <div>
+      <h2 id="greetingMsg">Good day</h2>
+      <p id="userName">Loading…</p>
+    </div>
+    <div class="mini-stat">
+      <strong id="streakCount">0</strong>
+      <span>🔥 Day streak</span>
+    </div>
+  </div>
+
+  <div class="coins-row">
+    <div>
+      <div class="label">🪙 EcoCoins</div>
+      <div class="amount" id="coinBalance">0</div>
+    </div>
+    <div class="next" id="nextRewardMsg">Loading…</div>
+  </div>
+</div>
+
+<div class="sdg-wrap">
+  <div class="sdg-title">Today’s SDG contributions</div>
+  <div class="sdg-grid">
+    <span class="sdg-chip" id="sdg2">🟡 SDG 2</span>
+    <span class="sdg-chip" id="sdg3">🟢 SDG 3</span>
+    <span class="sdg-chip" id="sdg5">🟣 SDG 5</span>
+    <span class="sdg-chip" id="sdg6">🔵 SDG 6</span>
+    <span class="sdg-chip" id="sdg12">⚫ SDG 12</span>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="card strong pad progress-card">
+    <div class="progress-ring-container">
+      <svg class="progress-ring" width="102" height="102" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#2D6A4F"/>
+            <stop offset="100%" style="stop-color:#52B788"/>
+          </linearGradient>
+        </defs>
+        <circle class="progress-ring-bg" cx="50" cy="50" r="45"/>
+        <circle class="progress-ring-fill" id="progressRing" cx="50" cy="50" r="45"/>
+      </svg>
+      <div class="progress-text" id="progressPercent">0%</div>
+    </div>
+    <div class="progress-label" id="progressLabel">Complete your habits to earn coins.</div>
+  </div>
+
+  <div class="section-title"><i class="fas fa-tasks"></i> Today’s habits</div>
+
+  <div class="habit-card" id="habit-meal" onclick="goToMeal()">
+    <div class="habit-icon" style="background: rgba(244,162,97,0.18);">🍽️</div>
+    <div class="habit-info">
+      <div class="habit-name">Log your meal</div>
+      <div class="habit-desc">AI scores your meal and gives a tip</div>
+    </div>
+    <div class="habit-coins">+15 🪙</div>
+    <div class="habit-check" id="check-meal"><i class="fas fa-check" style="font-size:12px;"></i></div>
+  </div>
+
+  <div class="card strong pad" style="margin-bottom:12px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap: 12px; margin-bottom: 10px;">
+      <div class="water-title">💧 Daily water</div>
+      <div class="water-amount"><span id="waterAmount">0.0</span>L / 3L</div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="waterBar" style="width:0%"></div>
+    </div>
+    <div class="water-buttons">
+      <button class="water-btn" onclick="addWater(250)">+250ml</button>
+      <button class="water-btn" onclick="addWater(500)">+500ml</button>
+      <button class="water-btn" onclick="addWater(1000)">+1L</button>
+    </div>
+    <div class="help">You earn 5 coins per 250ml tracked (once per day total).</div>
+  </div>
+
+  <div class="habit-card" id="habit-mood" onclick="showMoodPicker()">
+    <div class="habit-icon" style="background: rgba(255,0,128,0.08);">😊</div>
+    <div class="habit-info">
+      <div class="habit-name">Mood check‑in</div>
+      <div class="habit-desc">A 2‑second check helps us support you</div>
+    </div>
+    <div class="habit-coins">+10 🪙</div>
+    <div class="habit-check" id="check-mood"><i class="fas fa-check" style="font-size:12px;"></i></div>
+  </div>
+
+  <div class="habit-card" id="habit-learn" onclick="window.location.href='/learn'">
+    <div class="habit-icon" style="background: rgba(82,183,136,0.12);">📚</div>
+    <div class="habit-info">
+      <div class="habit-name">Learn & earn</div>
+      <div class="habit-desc">3 cards + quiz = +30 coins</div>
+    </div>
+    <div class="habit-coins">+30 🪙</div>
+    <div class="habit-check" id="check-learn"><i class="fas fa-check" style="font-size:12px;"></i></div>
+  </div>
+
+  <div class="summary-grid" style="margin-top:12px;">
+    <div class="summary-item">
+      <div class="s-icon">🍽️</div>
+      <div class="s-value" id="mealsLogged">0</div>
+      <div class="s-label">Meals logged</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-icon">💧</div>
+      <div class="s-value" id="waterToday">0L</div>
+      <div class="s-label">Water today</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-icon">🌍</div>
+      <div class="s-value" id="sdgCount">0/5</div>
+      <div class="s-label">SDGs today</div>
+    </div>
+    <div class="summary-item">
+      <div class="s-icon">🪙</div>
+      <div class="s-value" id="coinsToday">0</div>
+      <div class="s-label">Coins today</div>
+    </div>
+  </div>
+</div>
+
+<div id="moodPopup" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size:40px; margin-bottom:6px;">😊</div>
+      <h3>How are you feeling?</h3>
+      <p>Quick check-in helps us personalize your day.</p>
+      <div style="display:flex;justify-content:space-around;font-size:34px;margin: 14px 0 18px;">
+        <span onclick="selectMood('😢','Very Low')" style="cursor:pointer;" title="Very Low">😢</span>
+        <span onclick="selectMood('😕','Low')" style="cursor:pointer;" title="Low">😕</span>
+        <span onclick="selectMood('😐','Neutral')" style="cursor:pointer;" title="Neutral">😐</span>
+        <span onclick="selectMood('🙂','Good')" style="cursor:pointer;" title="Good">🙂</span>
+        <span onclick="selectMood('😄','Great')" style="cursor:pointer;" title="Great">😄</span>
+      </div>
+      <button class="btn btn-ghost btn-block" onclick="closeMoodPicker()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="coin-popup" id="coinPopup">
+  <div style="font-size:28px;">🪙</div>
+  <div class="coin-amount" id="coinPopupAmount">+15</div>
+  <div class="coin-label">EcoCoins earned</div>
+  <div style="font-size:12px;margin-top:6px;opacity:0.82;" id="coinPopupSDG"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<nav class="bottom-nav">
+  <a href="/dashboard" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="/meal" class="nav-item"><i class="fas fa-utensils"></i><span>Meal</span></a>
+  <a href="/surplus" class="nav-item"><i class="fas fa-store"></i><span>Surplus</span></a>
+  <a href="/wallet" class="nav-item"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="/learn" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
+</nav>
+
+<script src="/static/js/coins.js"></script>
+<script src="/static/js/streak.js"></script>
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

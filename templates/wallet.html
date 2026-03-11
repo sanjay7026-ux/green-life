@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Wallet — GreenLife{% endblock %}
+
+{% block body %}
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="mark">👛</div>
+      <div class="title">
+        <strong>EcoCoin Wallet</strong>
+        <span>Rewards are demo-simulated</span>
+      </div>
+    </div>
+    <div class="pill">Balance <strong id="walletBalance">0</strong> 🪙</div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="grid two">
+    <div class="card strong pad">
+      <div class="card-title">Today</div>
+      <div class="card-subtitle">Coins earned in the last 24h</div>
+      <div style="height:10px;"></div>
+      <div style="font-size:28px; font-weight:1000; color:#1B4332;">
+        <span id="todayStat">0</span> 🪙
+      </div>
+    </div>
+    <div class="card strong pad">
+      <div class="card-title">Streak</div>
+      <div class="card-subtitle">Keep it going</div>
+      <div style="height:10px;"></div>
+      <div style="font-size:28px; font-weight:1000; color:#1B4332;">
+        <span id="streakStat">0</span> 🔥
+      </div>
+    </div>
+  </div>
+
+  <div style="height:12px;"></div>
+
+  <div class="card strong pad">
+    <div class="card-title">Next reward</div>
+    <div class="card-subtitle" id="nextRewardText">Loading…</div>
+    <div style="height:12px;"></div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="walletProgressFill" style="width:0%"></div>
+    </div>
+    <div class="help" id="progressLabel"></div>
+  </div>
+
+  <div style="height:12px;"></div>
+
+  <div class="card strong pad">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+      <div>
+        <div class="card-title">Redeem</div>
+        <div class="card-subtitle">Unlock rewards as your balance grows</div>
+      </div>
+      <div class="pill" style="background: rgba(11,18,32,0.06); border-color: rgba(11,18,32,0.10); color: rgba(11,18,32,0.82);">
+        Total earned <strong id="totalEarned">0</strong>
+      </div>
+    </div>
+
+    <div style="height:12px;"></div>
+    <div class="grid">
+      <div class="card pad" style="background: rgba(255,255,255,0.70); border-color: rgba(11,18,32,0.10);">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+          <div>
+            <div style="font-weight:1000; color:#1B4332;">₹5 Airtime</div>
+            <div class="help">Cost: 500 🪙</div>
+          </div>
+          <button class="btn btn-primary" id="btn-airtime" onclick="redeemReward('airtime', 500, '₹5 Airtime')">Redeem</button>
+        </div>
+      </div>
+      <div class="card pad" style="background: rgba(255,255,255,0.70); border-color: rgba(11,18,32,0.10);">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+          <div>
+            <div style="font-weight:1000; color:#1B4332;">₹10 Voucher</div>
+            <div class="help">Cost: 1000 🪙</div>
+          </div>
+          <button class="btn btn-primary" id="btn-voucher" onclick="redeemReward('voucher', 1000, '₹10 Voucher')">Redeem</button>
+        </div>
+      </div>
+      <div class="card pad" style="background: rgba(255,255,255,0.70); border-color: rgba(11,18,32,0.10);">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap: 12px;">
+          <div>
+            <div style="font-weight:1000; color:#1B4332;">₹20 Cash</div>
+            <div class="help">Cost: 2000 🪙</div>
+          </div>
+          <button class="btn btn-primary" id="btn-cash" onclick="redeemReward('cash', 2000, '₹20 Cash')">Redeem</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:12px;"></div>
+
+  <div class="card strong pad">
+    <div class="card-title">Transactions</div>
+    <div class="card-subtitle">Recent earns and redemptions</div>
+    <div style="height:12px;"></div>
+    <div id="txHistory"></div>
+  </div>
+</div>
+
+<!-- Redeem Modal -->
+<div class="modal-overlay" id="redeemModal">
+  <div class="modal">
+    <div class="modal-body" style="text-align:center;">
+      <div style="font-size:40px; margin-bottom: 6px;" id="modalEmoji">🎉</div>
+      <h3 id="modalTitle">Reward Requested!</h3>
+      <p id="modalDesc"></p>
+      <div class="card pad" style="background: rgba(11,18,32,0.04); border-color: rgba(11,18,32,0.08); text-align:left;" id="modalDetails"></div>
+      <div style="height:12px;"></div>
+      <button class="btn btn-primary btn-block" onclick="closeRedeemModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<nav class="bottom-nav">
+  <a href="/dashboard" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+  <a href="/meal" class="nav-item"><i class="fas fa-utensils"></i><span>Meal</span></a>
+  <a href="/surplus" class="nav-item"><i class="fas fa-store"></i><span>Surplus</span></a>
+  <a href="/wallet" class="nav-item active"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+  <a href="/learn" class="nav-item"><i class="fas fa-book"></i><span>Learn</span></a>
+</nav>
+
+<script src="/static/js/coins.js"></script>
+<script src="/static/js/streak.js"></script>
+<script src="/static/js/wallet.js"></script>
+{% endblock %}
+
