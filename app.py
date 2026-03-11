@@ -1,4 +1,4 @@
-# ============================================================
+ # ============================================================
 # GreenLife - app.py
 # This is the BRAIN of the entire application
 # Every page and every API call goes through here
@@ -18,7 +18,14 @@ app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "greenlife2024")
 
 # Connect to Groq AI
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+_groq_key = os.getenv("GROQ_API_KEY")
+groq_client = None
+if _groq_key:
+    try:
+        groq_client = Groq(api_key=_groq_key)
+    except Exception as e:
+        print(f"Groq init failed: {e}")
+        groq_client = None
 
 # ============================================================
 # PAGE ROUTES — These serve the HTML pages
@@ -105,14 +112,15 @@ def analyze_meal():
         }}
         """
 
+        if groq_client is None:
+            return jsonify(get_fallback_response(meal_text))
+
         # Send to Groq AI and get response
         response = groq_client.chat.completions.create(
             model="llama3-8b-8192",
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
+            messages=[{"role": "user", "content": prompt}],
             temperature=0.3,  # Low temperature = more consistent responses
-            max_tokens=300
+            max_tokens=300,
         )
 
         # Extract the text response from Groq

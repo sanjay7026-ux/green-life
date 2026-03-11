@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "item": "Veg biryani boxes",
+    "restaurant": "GreenBowl Kitchen",
+    "pickup_time": "Today 7–9pm",
+    "quantity": 8,
+    "price": "₹49"
+  },
+  {
+    "id": 2,
+    "item": "Mixed fruit cups",
+    "restaurant": "FreshMart",
+    "pickup_time": "Today 5–7pm",
+    "quantity": 12,
+    "price": "₹19"
+  }
+]
+

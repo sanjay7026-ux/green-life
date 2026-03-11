@@ -1,0 +1,13 @@
+[
+  {
+    "question": "Which habit helps reduce food waste the most?",
+    "options": ["Buying in bulk always", "Planning meals before shopping", "Skipping leftovers"],
+    "answer_index": 1
+  },
+  {
+    "question": "A simple hydration strategy is to…",
+    "options": ["Drink 250ml regularly", "Only drink when thirsty", "Avoid water with meals"],
+    "answer_index": 0
+  }
+]
+
