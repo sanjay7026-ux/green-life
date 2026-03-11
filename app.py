@@ -7,11 +7,23 @@
 from flask import Flask, render_template, request, jsonify
 import os
 import json
-from dotenv import load_dotenv
-from groq import Groq
 
-# Load our secret keys from .env file
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+except Exception:
+    load_dotenv = None
+
+try:
+    from groq import Groq
+except Exception:
+    Groq = None
+
+# Load our secret keys from .env file (local dev only)
+if load_dotenv:
+    try:
+        load_dotenv()
+    except Exception as e:
+        print(f"dotenv load failed: {e}")
 
 # Create the Flask app
 app = Flask(__name__)
@@ -20,7 +32,7 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY", "greenlife2024")
 # Connect to Groq AI
 _groq_key = os.getenv("GROQ_API_KEY")
 groq_client = None
-if _groq_key:
+if _groq_key and Groq is not None:
     try:
         groq_client = Groq(api_key=_groq_key)
     except Exception as e:
