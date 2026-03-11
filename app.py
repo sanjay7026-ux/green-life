@@ -193,7 +193,7 @@ def get_fallback_response(meal_text: str) -> dict:
     A banner on the frontend should ideally indicate this is an estimate.
     """
     return {
-        "calories": 400,
+        "calories": "bsdkk",
         "health_score": 6,
         "grade": "C",
         "summary": f"Could not fully analyze '{meal_text}' — showing estimated values.",
