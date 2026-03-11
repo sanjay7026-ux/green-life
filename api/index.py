@@ -1,4 +1,11 @@
-from app import app
+# ============================================================
+# api/index.py  — Vercel serverless entrypoint
+# ============================================================
 
-# Vercel Python runtime will use the Flask WSGI app object named `app`.
+import sys
+import os
 
+# Add the project root (one level up from api/) so app.py can be imported
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from app import app  # noqa: F401

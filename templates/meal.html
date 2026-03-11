@@ -19,14 +19,14 @@
 <div class="page-content">
   <div class="card strong pad">
     <div class="card-title">What did you eat?</div>
-    <div class="card-subtitle">Example: “2 chapatis, dal, salad, and mango lassi”</div>
+    <div class="card-subtitle">Example: "2 chapatis, dal, salad, and mango lassi"</div>
 
     <div style="height:12px;"></div>
     <textarea class="textarea" id="mealInput" placeholder="Type your meal here…"></textarea>
 
     <div style="height:12px;"></div>
     <button class="btn btn-primary btn-block" id="analyzeBtn" onclick="analyzeMeal()">
-      Analyze meal
+      Analyse meal
     </button>
 
     <div class="help" id="mealHint">Earn <strong>+15 coins</strong> the first time you log a meal each day.</div>
@@ -35,13 +35,29 @@
   <div style="height:12px;"></div>
 
   <div class="card strong pad" id="resultCard" style="display:none;">
+
+    <!-- FIX: Fallback banner (hidden by default, shown when AI is unavailable) -->
+    <div id="fallbackBanner" style="
+        display:none;
+        background: rgba(244,162,97,0.14);
+        border: 1px solid rgba(244,162,97,0.35);
+        border-radius: 12px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 800;
+        color: #92400e;
+        margin-bottom: 12px;
+    ">
+      ⚠️ AI unavailable — values are estimates. Set your GROQ_API_KEY for real analysis.
+    </div>
+
     <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
       <div>
         <div class="card-title" id="resultTitle">Your score</div>
         <div class="card-subtitle" id="resultSummary"></div>
       </div>
       <div class="pill" style="background: rgba(11,18,32,0.06); border-color: rgba(11,18,32,0.10); color: rgba(11,18,32,0.82);">
-        Grade <strong id="resultGrade">B</strong>
+        Grade <strong id="resultGrade">—</strong>
       </div>
     </div>
 
@@ -90,4 +106,3 @@
 <script src="/static/js/streak.js"></script>
 <script src="/static/js/meal.js"></script>
 {% endblock %}
-
